@@ -1,0 +1,32 @@
+import csv
+import json
+compromised_users = []
+## Open the password file that contains passwords and save all usernames in a list called compromised_users
+with open('passwords.csv') as password_file:
+  password_csv = csv.DictReader(password_file)
+  for i in password_csv:
+    password_row = i
+    compromised_users.append(password_row['Username'])
+    
+# Use the compromised users in a new file 
+with open('compromised_users.txt','w') as compromised_user_file:
+  for i in compromised_users:
+    new_value = compromised_user_file.write(i)
+    
+# Send notification of succeess using json 
+with open('boss_message.json','w') as boss_message:
+  boss_message_dict={"recepient":"The boss", "message":"Mission Success"}
+  json.dump(boss_message_dict,boss_message)
+  
+# Replace the password file with new text
+with open('passwords.csv','w') as new_passwords_obj:
+  slash_null_sig = """  _  _     ___   __  ____             
+/ )( \   / __) /  \(_  _)            
+) \/ (  ( (_ \(  O ) )(              
+\____/   \___/ \__/ (__)             
+ _  _   __    ___  __ _  ____  ____  
+/ )( \ / _\  / __)(  / )(  __)(    \ 
+) __ (/    \( (__  )  (  ) _)  ) D ( 
+\_)(_/\_/\_/ \___)(__\_)(____)(____/ 
+   """
+new_passwords_obj.write(slash_null_sig)
