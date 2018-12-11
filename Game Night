@@ -1,0 +1,80 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+gamers=[]
+def add_gamer(gamer,gamer_list):
+    if "name" in gamer and "availability" in gamer:
+        gamer_list.append(gamer)
+                
+kimberly = {"name":"Navjot", "availability":["Monday","Tuesday","Wednesday"]}
+add_gamer(kimberly, gamers)
+
+
+# Create a list of gamers
+
+add_gamer({'name':'Thomas Nelson','availability': ["Tuesday", "Thursday", "Saturday"]}, gamers)
+add_gamer({'name':'Joyce Sellers','availability': ["Monday", "Wednesday", "Friday", "Saturday"]}, gamers)
+add_gamer({'name':'Michelle Reyes','availability': ["Wednesday", "Thursday", "Sunday"]}, gamers)
+add_gamer({'name':'Stephen Adams','availability': ["Thursday", "Saturday"]}, gamers)
+add_gamer({'name': 'Joanne Lynn', 'availability': ["Monday", "Thursday"]}, gamers)
+add_gamer({'name':'Latasha Bryan','availability': ["Monday", "Sunday"]}, gamers)
+add_gamer({'name':'Crystal Brewer','availability': ["Thursday", "Friday", "Saturday"]}, gamers)
+add_gamer({'name':'James Barnes Jr.','availability': ["Tuesday", "Wednesday", "Thursday", "Sunday"]}, gamers)
+add_gamer({'name':'Michel Trujillo','availability': ["Monday", "Tuesday", "Wednesday"]}, gamers)
+
+
+# Finding the perfect availability
+
+
+
+def build_daily_frequency_table():
+    count_availability = {"Monday":0 , "Tuesday":0, "Wednesday":0, "Thursday":0, "Friday":0, "Saturday":0, "Sunday":0}
+    return count_availability
+
+
+# Calculate the availability for each day of week
+def calculate_availability(gamers_list,available_frequency):
+    for i in gamers_list:
+        days = i.get('availability')
+        for i in days:
+            available_frequency[i]+=1
+    return available_frequency
+
+
+
+count_availability = calculate_availability(gamers,build_daily_frequency_table())
+print("The availability count is : \n" + str (count_availability))
+
+# Get the best night to host a game
+def find_best_night(availability_table):
+    highest_key = ""
+    highest_value = 0
+    for key in availability_table.keys():
+        if availability_table.get(key) > highest_value:
+            highest_value = availability_table.get(key)
+            highest_key= key
+    return highest_key
+            
+    
+
+best_night = find_best_night(count_availability)
+print("best night is :" + best_night)
+
+# Get the list of people who are available on game night
+
+def available_on_night(gamers_list,day):
+    available_people = []
+    for i in gamers_list:
+        if day in i.get('availability'):
+            available_people.append(i.get('name'))
+    return available_people
+        
+Available_people = available_on_night(gamers, best_night)
+print("The people available are: " + str(Available_people))
+
+
+# Print out the name, day and game name for all attendees
+def send_email(gamers_who_can_attend, day, game):
+    for i in gamers_who_can_attend:
+       print("{0} {1} {2}" .format(i, day, game ))
+send_email(Available_people, best_night , "Abruptly Goblins!")
